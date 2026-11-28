@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en" class="dark zzz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrackMyMoney — Personal Finance & Spreadsheet Tracker</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <!-- Google Fonts: Inter, Plus Jakarta Sans, Chakra Petch & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- SheetJS (XLSX) for real Excel (.xlsx) generation -->
@@ -22,30 +22,80 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        slate: {
-                            850: '#151e2e',
-                            950: '#090d16',
-                        }
+                        zzzDisplay: ['Chakra Petch', 'sans-serif'],
+                        zzzSans: ['Plus Jakarta Sans', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
+    <style>
+        /* Zenless Zone Zero (ZZZ) Theme Overrides */
+        html.zzz body {
+            background-color: #0b0c10;
+            background-image:
+                linear-gradient(rgba(11, 12, 16, 0.78), rgba(11, 12, 16, 0.88)),
+                url('https://i.pinimg.com/736x/71/7a/bc/717abc3be005dd4b5a5d3806295b1623.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #f4f6fb;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        html.zzz h1, html.zzz h2, html.zzz h3, html.zzz th {
+            font-family: 'Chakra Petch', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        html.zzz header {
+            background-color: rgba(11, 12, 16, 0.92);
+            border-bottom: 2px solid #c8ff00;
+        }
+        html.zzz .bg-white,
+        html.zzz .dark\:bg-slate-900 {
+            background-color: #14171f !important;
+            border-color: #2c3140 !important;
+            box-shadow: 4px 4px 0px #000000;
+        }
+        html.zzz .bg-slate-100,
+        html.zzz .dark\:bg-slate-800,
+        html.zzz thead,
+        html.zzz tfoot {
+            background-color: #1c202b !important;
+            border-color: #2c3140 !important;
+        }
+        html.zzz input:focus,
+        html.zzz select:focus {
+            --tw-ring-color: #c8ff00 !important;
+            border-color: #c8ff00 !important;
+        }
+        html.zzz #exportExcelBtn,
+        html.zzz button[type="submit"] {
+            background-color: #c8ff00 !important;
+            color: #0b0c10 !important;
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0px #000000;
+        }
+        html.zzz #exportExcelBtn:hover,
+        html.zzz button[type="submit"]:hover {
+            background-color: #d9ff4d !important;
+        }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased transition-colors duration-200 min-h-screen flex flex-col">
 
     <!-- Top Navigation Header -->
     <header class="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+           
             <!-- Brand -->
             <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-sm shadow-emerald-600/20">
-                    <i data-lucide="sheet" class="w-5 h-5"></i>
-                </div>
+                <img src="./Assets/Item_Denny.webp" alt="MYOKANE Logo" class="w-9 h-9 rounded-xl object-cover shadow-sm">
                 <div>
-                    <h1 class="font-bold text-lg tracking-tight leading-none">MyOkane</h1>
+                    <h1 class="font-bold text-lg tracking-tight leading-none">MYOKANE</h1>
                     <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">Finance & Spreadsheet Engine</p>
                 </div>
             </div>
@@ -73,6 +123,13 @@
                     <option value="JPY">JPY (¥)</option>
                 </select>
 
+                <!-- Theme Selector -->
+                <select id="themeSelect" aria-label="Theme" class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium rounded-lg px-2.5 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+                    <option value="light">Theme: Light</option>
+                    <option value="dark">Theme: Dark</option>
+                    <option value="zzz">Theme: ZZZ</option>
+                </select>
+
                 <!-- Export Buttons -->
                 <div class="flex items-center gap-1.5">
                     <button id="exportCsvBtn" title="Download CSV File" class="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition cursor-pointer">
@@ -85,11 +142,7 @@
                     </button>
                 </div>
 
-                <!-- Theme Toggle -->
-                <button id="themeToggle" aria-label="Toggle Dark Mode" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition cursor-pointer">
-                    <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
-                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
-                </button>
+        
             </div>
         </div>
     </header>
@@ -496,7 +549,7 @@
         let state = {
             transactions: [],
             currency: 'USD',
-            darkMode: false,
+            theme: 'light', // 'light' | 'dark' | 'zzz'
             sortBy: 'date',
             sortDir: 'desc', // 'asc' or 'desc'
             filterType: 'ALL',
@@ -536,9 +589,9 @@
                 if (savedSettings) {
                     const parsed = JSON.parse(savedSettings);
                     state.currency = parsed.currency || 'USD';
-                    state.darkMode = Boolean(parsed.darkMode);
+                    state.theme = parsed.theme || (parsed.darkMode ? 'dark' : 'light');
                 } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    state.darkMode = true;
+                    state.theme = 'dark';
                 }
                 const savedGoals = localStorage.getItem(GOALS_KEY);
                     if (savedGoals) state.goals = JSON.parse(savedGoals);
@@ -564,7 +617,7 @@
             try {
                 localStorage.setItem(SETTINGS_KEY, JSON.stringify({
                     currency: state.currency,
-                    darkMode: state.darkMode
+                    theme: state.theme
                 }));
             } catch (err) {
                 console.error('Error saving settings:', err);
@@ -573,11 +626,16 @@
 
         function initTheme() {
             const htmlEl = document.documentElement;
-            if (state.darkMode) {
-                htmlEl.classList.add('dark');
+            htmlEl.classList.remove('light', 'dark', 'zzz');
+
+            if (state.theme === 'zzz') {
+                // Keep 'dark' alongside 'zzz' so all dark:* Tailwind text/input utilities stay readable
+                htmlEl.classList.add('dark', 'zzz');
             } else {
-                htmlEl.classList.remove('dark');
+                htmlEl.classList.add(state.theme);
             }
+
+            document.getElementById('themeSelect').value = state.theme;
             document.getElementById('currencySelect').value = state.currency;
         }
 
@@ -606,11 +664,13 @@
 
         // --- Event Bindings ---
         function bindEvents() {
-            // Theme toggle
-            document.getElementById('themeToggle').addEventListener('click', () => {
-                state.darkMode = !state.darkMode;
+            // Theme selector
+            document.getElementById('themeSelect').addEventListener('change', (e) => {
+                state.theme = e.target.value;
                 initTheme();
                 saveSettings();
+                renderAll();
+                showToast(`Theme switched to ${state.theme.toUpperCase()}`, 'info');
             });
 
             // Currency selector
@@ -935,11 +995,19 @@
                 filteredNet += signedAmount;
 
                 const isIncome = tx.type === 'Income';
-                const amountColor = isIncome ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
-                const badgeBg = isIncome
-                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800'
-                    : 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800';
+                const isZZZ = state.theme === 'zzz';
 
+                const amountColor = isZZZ
+                    ? (isIncome ? 'text-[#c8ff00]' : 'text-[#ff2a85]')
+                    : (isIncome ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400');
+
+                const badgeBg = isZZZ
+                    ? (isIncome
+                        ? 'bg-[#c8ff00]/15 text-[#c8ff00] border-[#c8ff00]/50 font-zzzDisplay uppercase'
+                        : 'bg-[#ff2a85]/15 text-[#ff2a85] border-[#ff2a85]/50 font-zzzDisplay uppercase')
+                    : (isIncome
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800'
+                        : 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800');
                 const allCategories = [...CATEGORIES.Expense, ...CATEGORIES.Income];
                 const categoryOptions = allCategories.map(c =>
                     `<option value="${c}" ${c === tx.category ? 'selected' : ''}>${c}</option>`
